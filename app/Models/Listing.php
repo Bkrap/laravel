@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Listing extends Model
 {
     use HasFactory;
+
+    // Ovaj snippet metode je unutar modela
+    public function scopeFilter($query, array $filters) {
+        // BUTTON CLICK ENDPOINT
+        if($filters['tag'] ?? false) {
+            $query->where('tags', 'like', '%' . request('tag') . '%');
+        }
+
+        // SEARCH
+        if($filters['search'] ?? false) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+                    ->orWhere('title', 'like', '%' . request('search') . '%')
+                    ->orWhere('tags', 'like', '%' . request('search') . '%');
+        }
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,13 +20,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// All listings - u kontroleru je nova zamjena za ovo
+// Route::get('/listings', function() {
+//     return view('listings', [
+//         'heading'   => 'Latest listings',
+//         'listings'  => Listing::all(),
+//     ]);
+// });
+
 // All listings
-Route::get('/listings', function() {
-    return view('listings', [
-        'heading'   => 'Latest listings',
-        'listings'  => Listing::all(),
-    ]);
-});
+/*
+    @ * index je ime metode
+*/
+Route::get('/listings', [ListingController::class, 'index']);
 
 // Single listing
 // Route::get('/listings/{id}', function($id) {
@@ -33,6 +40,10 @@ Route::get('/listings', function() {
 //         'listing'  => Listing::find($id),
 //     ]);
 // });
+
+// Single listing
+
+Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
 // // Single listing - Route Model Binding
 // Route::get('/listings/{listing}', function(Listing $listing) {
@@ -48,8 +59,9 @@ Route::get('/listings', function() {
 // });
 
 // Single listing - Route Model Binding skraćeno
-Route::get('/listings/{listing}', function(Listing $listing) { 
-        return view('listing', [
-            'listing'  => $listing,
-        ]);
-});
+// Route::get('/listings/{listing}', function(Listing $listing) { 
+//         return view('listing', [
+//             'listing'  => $listing,
+//         ]);
+// });
+
